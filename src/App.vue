@@ -1,5 +1,5 @@
 <script setup>
-
+import Presupuesto from './components/Presupuesto.vue'
 
 </script>
 
@@ -7,13 +7,20 @@
   <div>
     <header>
       <h1>Planificador de Gastos</h1>
+      <div class="contenedor-header contenedor sombra ">
+        <Presupuesto
+        
+        />
+      </div>
     </header>
+
   </div>
 </template>
 
 <style>
   :root {
     --azul: #3b82f6;
+    --azul-oscuro: #1e40af;
     --blanco: #fff;
     --gris: #94a3b8;
     --gris-claro: #f5f5f5;
@@ -51,6 +58,25 @@ header h1 {
     margin: 0;
     padding: 3rem 0;
     text-align: center;
+}
+
+.contenedor {
+    width: 90%;
+    max-width: 80rem;
+    margin: 0 auto;
+}
+
+.contenedor-header {
+  margin-top: -5rem;
+  transform: translateY(5rem);
+  padding: 5rem;
+}
+
+.sombra {
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .1);
+    background-color: var(--blanco);
+    border-radius: 1.2rem;
+    padding: 2rem;
 }
 
 </style>
