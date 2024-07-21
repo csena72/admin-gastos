@@ -6,14 +6,24 @@ import Alerta from './Alerta.vue'
 const presupuesto = ref(0)
 const error = ref('')
 
+
+defineProps({
+    
+})
+
+
+const emit = defineEmits(['definir-presupuesto'])
+
 const definirPresupuesto = () => {
-    if(presupuesto.value < 1) {
+    if(presupuesto.value < 1 || isNaN(presupuesto.value)) {
         error.value = 'No es un presupuesto válido'
         setTimeout(() => {
             error.value = ''
         }, 3000);
+
+        return
     }
-    console.log(presupuesto.value)
+    emit('definir-presupuesto', presupuesto.value)
 }
 
 

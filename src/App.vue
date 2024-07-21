@@ -1,5 +1,16 @@
 <script setup>
+import { ref } from 'vue'
 import Presupuesto from './components/Presupuesto.vue'
+import ControlPresupuesto from './components/ControlPresupuesto.vue'
+import iconoNuevoGasto from './assets/img/nuevo-gasto.svg'
+
+const presupuesto = ref(0)
+const disoponible = ref(0)
+
+const definirPresupuesto = (cantidad) => {
+  presupuesto.value = cantidad
+  disoponible.value = cantidad
+}
 
 </script>
 
@@ -9,10 +20,28 @@ import Presupuesto from './components/Presupuesto.vue'
       <h1>Planificador de Gastos</h1>
       <div class="contenedor-header contenedor sombra ">
         <Presupuesto
-        
+          v-if="presupuesto === 0"
+          @definir-presupuesto="definirPresupuesto"
+        />
+        <ControlPresupuesto 
+          v-else
+          :presupuesto="presupuesto"
+          :disoponible="disoponible"
         />
       </div>
     </header>
+    
+    <main v-if="presupuesto > 0">
+
+      <div class="crear-gasto">
+        <img
+          :src="iconoNuevoGasto"
+          alt="icono nuevo gasto"
+        />
+
+      </div>
+
+    </main>
 
   </div>
 </template>
@@ -77,6 +106,28 @@ header h1 {
     background-color: var(--blanco);
     border-radius: 1.2rem;
     padding: 2rem;
+}
+
+.crear-gasto {
+  position: fixed;
+  bottom: 5rem;
+  right: 5rem;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--azul);
+  width: 5rem;
+  height: 5rem;
+  cursor: pointer;
+  transition: all .3s ease;
+}
+
+.crear-gasto img {
+    width: 100%;
+}
+
+.crear-gasto img:hover {
+    transform: scale(1.1);
+    cursor: pointer;
 }
 
 </style>
