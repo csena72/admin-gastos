@@ -13,7 +13,7 @@ const modal = reactive({
   animar: false,
 })
 const presupuesto = ref(0)
-const disoponible = ref(0)
+const disponible = ref(0)
 const gastado     = ref(0)
 
 const gasto = reactive({
@@ -29,12 +29,12 @@ const gastos = ref([])
 watch(gastos, () => {
   const totalGastado = gastos.value.reduce((total, gasto) => total + Number(gasto.cantidad), 0)  
   gastado.value = totalGastado
-  disoponible.value = presupuesto.value - totalGastado
+  disponible.value = presupuesto.value - totalGastado
 }, { deep: true })
 
 const definirPresupuesto = (cantidad) => {
   presupuesto.value = cantidad
-  disoponible.value = cantidad
+  disponible.value = cantidad
 }
 
 const mostrarModal = () => {
@@ -90,7 +90,7 @@ const resetearGasto = () => {
         <ControlPresupuesto 
           v-else
           :presupuesto="presupuesto"
-          :disoponible="disoponible"
+          :disponible="disponible"
           :gastado="gastado"
         />
       </div>
@@ -118,6 +118,7 @@ const resetearGasto = () => {
       <Modal
         v-if="modal.mostrar"
         :modal="modal"
+        :disponible="disponible"
         v-model:nombre="gasto.nombre"
         v-model:cantidad="gasto.cantidad"
         v-model:categoria="gasto.categoria"

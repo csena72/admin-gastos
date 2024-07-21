@@ -8,7 +8,7 @@
             type: Number,
             required: true
         },
-        disoponible: {
+        disponible: {
             type: Number,
             required: true
         },
@@ -36,7 +36,7 @@
                 <span>Presupuesto:</span> {{ formatearCantidad( presupuesto )}}
             </p>
             <p>
-                <span>Disponible:</span> {{ formatearCantidad( disoponible )}}
+                <span>Disponible:</span> {{ formatearCantidad( disponible )}}
             </p>
             <p>
                 <span>Gastado: </span>{{ formatearCantidad( gastado ) }}
