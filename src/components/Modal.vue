@@ -58,7 +58,7 @@
 
     .modal {
         position: absolute;
-        background-color: rgb(0 0 0 / .8);
+        background-color: rgb(0 0 0 / .88);
         top: 0;
         left: 0;
         right: 0;
