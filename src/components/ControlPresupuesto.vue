@@ -11,6 +11,10 @@
         disoponible: {
             type: Number,
             required: true
+        },
+        gastado: {
+            type: Number,
+            required: true
         }
     })
 
@@ -32,10 +36,10 @@
                 <span>Presupuesto:</span> {{ formatearCantidad( presupuesto )}}
             </p>
             <p>
-                <span>Disoponible:</span> {{ formatearCantidad( disoponible )}}
+                <span>Disponible:</span> {{ formatearCantidad( disoponible )}}
             </p>
             <p>
-                <span>Gastado:</span> $ {{ 0 }}
+                <span>Gastado: </span>{{ formatearCantidad( gastado ) }}
             </p>
 
         </div>
