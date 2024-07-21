@@ -13,7 +13,7 @@ const diccionarioIconos = {
         ahorro : IconoAhorro,
         comida : IconoComida,
         casa : IconoCasa,
-        gastos : IconoGastos,
+        varios : IconoGastos,
         ocio : IconoOcio,
         salud : IconoSalud,
         suscripciones : IconoSuscripciones
@@ -25,6 +25,8 @@ const props = defineProps({
         required: true
     }
 })
+
+defineEmits(['seleccionar-gasto'])
 
 </script>
 
@@ -38,7 +40,10 @@ const props = defineProps({
             >
             <div class="detalles">
                 <p class="categoria">{{ gasto.categoria }}</p>
-                <p class="nombre">{{ gasto.nombre }}</p>
+                <p 
+                    class="nombre"
+                    @click="$emit('seleccionar-gasto', gasto.id)"
+                >{{ gasto.nombre }}</p>
 
                 <div class="fecha">
                     Fecha: 

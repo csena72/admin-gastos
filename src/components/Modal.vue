@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue"
+import { ref, computed } from "vue"
 import cerrarModal from "../assets/img/cerrar.svg";
 import Alerta from "./Alerta.vue"
 
@@ -35,11 +35,18 @@ const props = defineProps({
     type: [Number, String],
     required: true,
   },
+  id: {
+    type: [String, null],
+    required: true,
+  },
 });
 
+const cantidadAnterior = props.cantidad
+
+const isEdit = computed(() => props.id)
 
 const agregarGasto = () => {
-    const { nombre, cantidad, categoria, disponible  } = props
+    const { nombre, cantidad, categoria, disponible, id  } = props
     
     if([nombre, cantidad, categoria, disponible].includes('')) {
         error.value = 'Todos los campos son obligatorios'
@@ -58,13 +65,22 @@ const agregarGasto = () => {
         }, 3000);
         return
     }
-
-    if(disponible < cantidad) {
+    if(id){
+      if(cantidad > cantidadAnterior + disponible) {
         error.value = 'Has excedido el presupuesto'
-        setTimeout(() => {
-            error.value = ''
-        }, 3000);
-        return
+          setTimeout(() => {
+              error.value = ''
+          }, 3000);
+          return
+      }
+    } else {
+      if(disponible < cantidad) {
+          error.value = 'Has excedido el presupuesto'
+          setTimeout(() => {
+              error.value = ''
+          }, 3000);
+          return
+      }
     }
 
    emit('guardar-gasto', { nombre, cantidad, categoria })
@@ -89,7 +105,7 @@ const agregarGasto = () => {
         @submit.prevent="agregarGasto" 
         class="nuevo-gasto"
       >
-        <legend>Añadir Gasto</legend>
+        <legend>{{ isEdit ? 'Editar Gasto' : 'Nuevo Gasto'}}</legend>
 
         <Alerta Alerta  v-if="error">
           {{ error }}
@@ -134,7 +150,10 @@ const agregarGasto = () => {
           </select>
         </div>
 
-        <input type="submit" value="Añadir Gasto" />
+        <input 
+          type="submit" 
+          :value="[isEdit ? 'Guardar Cambios' : 'Añadir Gasto']"
+        />
       </form>
     </div>
   </div>
