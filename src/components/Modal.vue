@@ -12,6 +12,7 @@ const emit = defineEmits([
   "update:cantidad",
   "update:categoria",
   "guardar-gasto",
+  "eliminar-gasto",
 ]);
 
 const props = defineProps({
@@ -155,6 +156,16 @@ const agregarGasto = () => {
           :value="[isEdit ? 'Guardar Cambios' : 'Añadir Gasto']"
         />
       </form>
+
+      <button
+        type="button"
+        class="btn-eliminar"
+        v-if="isEdit"
+        @click="emit('eliminar-gasto', id)"
+      >
+        Eliminar Gasto
+      </button>
+
     </div>
   </div>
 </template>
@@ -236,4 +247,18 @@ const agregarGasto = () => {
   padding: 2rem;
   transition-duration: 0.3s;
 }
+
+.btn-eliminar {
+  padding: 1rem;
+  width: 100%;
+  background-color: #ef4444;
+  border: none;
+  border-radius: .5rem;
+  color: var(--blanco);
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-top: 10rem;
+  cursor: pointer;
+}
+
 </style>
