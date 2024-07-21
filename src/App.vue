@@ -1,5 +1,6 @@
 <script setup>
 import { ref, reactive } from 'vue'
+import { uid } from 'uid'
 import Presupuesto from './components/Presupuesto.vue'
 import ControlPresupuesto from './components/ControlPresupuesto.vue'
 import Modal from './components/Modal.vue'
@@ -11,6 +12,16 @@ const modal = reactive({
 })
 const presupuesto = ref(0)
 const disoponible = ref(0)
+
+const gasto = reactive({
+  nombre: '',
+  cantidad: '',
+  categoria: '',
+  id: null,
+  fecha: Date.now(),
+})
+
+const gastos = ref([])
 
 const definirPresupuesto = (cantidad) => {
   presupuesto.value = cantidad
@@ -29,6 +40,29 @@ const ocultarModal = () => {
   setTimeout(() => {
     modal.mostrar = false
   }, 300)
+}
+
+const guardarGasto = () => {
+  console.log('Guardando gasto desde app...')
+
+  gastos.value.push({
+    ...gasto,
+    id: uid()
+  })
+
+  ocultarModal()
+
+  resetearGasto()
+}
+
+const resetearGasto = () => {
+  Object.assign(gasto, {
+    nombre: '',
+    cantidad: '',
+    categoria: '',
+    id: null,
+    fecha: Date.now(),
+  })
 }
 
 </script>
@@ -63,7 +97,11 @@ const ocultarModal = () => {
       <Modal
         v-if="modal.mostrar"
         :modal="modal"
+        v-model:nombre="gasto.nombre"
+        v-model:cantidad="gasto.cantidad"
+        v-model:categoria="gasto.categoria"
         @ocultar-modal="ocultarModal"
+        @guardar-gasto="guardarGasto"
       />
 
     </main>
