@@ -126,6 +126,11 @@ const gastosFiltrados = computed(() => {
   return gastos.value.filter(gasto => gasto.categoria === filtro.value)
 })
 
+const resetApp = () => {
+  localStorage.clear()
+  location.reload()
+}
+
 </script>
 
 <template>
@@ -144,6 +149,8 @@ const gastosFiltrados = computed(() => {
           :presupuesto="presupuesto"
           :disponible="disponible"
           :gastado="gastado"
+          @reset-app="resetApp"
+
         />
       </div>
     </header>
