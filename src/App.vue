@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, watch, computed } from 'vue'
+import { ref, reactive, watch, computed, onMounted } from 'vue'
 import { uid } from 'uid'
 import Presupuesto from './components/Presupuesto.vue'
 import ControlPresupuesto from './components/ControlPresupuesto.vue'
@@ -32,6 +32,7 @@ watch(gastos, () => {
   const totalGastado = gastos.value.reduce((total, gasto) => total + Number(gasto.cantidad), 0)  
   gastado.value = totalGastado
   disponible.value = presupuesto.value - totalGastado
+  localStorage.setItem('gastos', JSON.stringify(gastos.value))
 }, { deep: true })
 
 watch(modal, () => {
@@ -39,6 +40,22 @@ watch(modal, () => {
     resetearGasto()
   }
 }, { deep: true })
+
+watch(presupuesto, () => {
+  localStorage.setItem('presupuesto', presupuesto.value)
+})
+
+onMounted(() => {
+  const presupuestoStorage = localStorage.getItem('presupuesto')
+  if(presupuestoStorage) {
+    presupuesto.value = Number(presupuestoStorage)
+    disponible.value = Number(presupuestoStorage)
+  }
+  const gastosStorage = localStorage.getItem('gastos')
+  if(gastosStorage) {
+    gastos.value = JSON.parse(gastosStorage)
+  }
+})
 
 const definirPresupuesto = (cantidad) => {
   presupuesto.value = cantidad
